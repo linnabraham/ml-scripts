@@ -6,7 +6,7 @@ def cross_entropy(p, q):
      eps = 1e-15
      return -sum([p[i]*log(q[i]+eps) for i in range(len(p))])
 
-def compute_bce(true_labels:list, predictions:list):
+def compute_bce_losses(true_labels:list, predictions:list):
     """
     Implementation inspired from
     https://machinelearningmastery.com/cross-entropy-for-machine-learning/
@@ -24,4 +24,4 @@ def compute_bce(true_labels:list, predictions:list):
         ce = cross_entropy(expected, predicted)
         losses.append(ce)
     losses = np.array(losses)
-    return np.mean(losses)
+    return losses

@@ -163,7 +163,7 @@ def plot_confusion_matrix(
     if class_names is not None:
         tick_marks = np.arange(len(class_names))
         plt.xticks(
-            tick_marks, class_names, rotation=45, ha="right", rotation_mode="anchor"
+            tick_marks, class_names, rotation=0, ha="right", rotation_mode="anchor"
         )
         plt.yticks(tick_marks, class_names)
 

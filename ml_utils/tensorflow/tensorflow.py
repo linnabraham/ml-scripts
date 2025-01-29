@@ -1,5 +1,6 @@
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
+from tensorflow.keras.callbacks import Callback
 import numpy as np
 # TODO: This function is already defined in my galactic-rings repo
 def get_image_array(img_path, target_size):
@@ -9,6 +10,23 @@ def get_image_array(img_path, target_size):
     # Rescale the image manually
     rescaled_img = img_array / 255.0
     return rescaled_img
+
+class SaveHistoryCallback(Callback):
+    def __init__(self, file_path):
+        super().__init__()
+        self.file_path = file_path
+        self.history = {'loss': [], 'val_loss': [], 'auc_pr':[], 'val_auc_pr':[], 'val_precision':[], 'val_recall':[]}
+
+    def on_epoch_end(self, epoch, logs=None):
+        self.history['loss'].append(logs.get('loss'))
+        self.history['val_loss'].append(logs.get('val_loss'))
+        self.history['auc_pr'].append(logs.get('auc_pr'))
+        self.history['val_auc_pr'].append(logs.get('val_auc_pr'))
+        self.history['val_precision'].append(logs.get('val_precision'))
+        self.history['val_recall'].append(logs.get('val_recall'))
+
+        with open(self.file_path, 'w') as f:
+            json.dump(self.history, f)
 
 class trained_model:
     def __init__(self, trained_model_path):

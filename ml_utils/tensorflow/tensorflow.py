@@ -1,7 +1,10 @@
+import json
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.callbacks import Callback
 import numpy as np
+import os
+
 # TODO: This function is already defined in my galactic-rings repo
 def get_image_array(img_path, target_size):
     my_image = image.load_img(img_path,target_size=target_size)
@@ -50,10 +53,8 @@ class trained_model:
         predictions = self.model.predict(img_array)
         return predictions
 
-    def evaluate(trained_model_path):
+    def evaluate(self, trained_model_path):
         if not os.path.exists(trained_model_path):
             raise ValueError("Invalid model path")
 
         model = trained_model(trained_model_path).model
-
-
